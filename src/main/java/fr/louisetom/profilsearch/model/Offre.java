@@ -14,7 +14,6 @@ import java.util.Date;
 @NoArgsConstructor
 
 public class Offre {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,4 +23,14 @@ public class Offre {
     private String type;
     private String place;
     private int salary;
+
+    public Offre(String name, Date creation_date, String description, String type, String place, int salary) {
+        this.name = name;
+        this.creation_date = creation_date;
+        this.description = description;
+        this.type = type;
+        this.place = place;
+        this.salary = salary;
+    }
+
 }
