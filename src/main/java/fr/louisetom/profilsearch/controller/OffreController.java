@@ -21,7 +21,7 @@ public class OffreController {
         return offreService.createOffre(offre);
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/all")
     public List<Offre> getAllOffre() {
 
         List<Offre> offres = new ArrayList<Offre>();
@@ -35,11 +35,9 @@ public class OffreController {
         //return offreService.getAllOffre();
     }
 
-    @GetMapping("/getById")
-    public Offre getOffreById(Long id) {
+    @GetMapping("/{id}")
+    public Offre getOffreById(@PathVariable Long id) {
         return offreService.getOffreById(id);
     }
-
-
 
 }
