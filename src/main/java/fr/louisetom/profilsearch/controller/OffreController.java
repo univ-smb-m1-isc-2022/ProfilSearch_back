@@ -23,7 +23,7 @@ public class OffreController {
 
     @GetMapping("/all")
     public List<Offre> getAllOffre() {
-
+/*
         List<Offre> offres = new ArrayList<Offre>();
         Offre offre = new Offre("Dev Java", new Date(), "Description", "CDI", "Paris", 3000);
         Offre offre2 = new Offre("Dev Python", new Date(), "Description", "CDI", "Paris", 3000);
@@ -32,7 +32,9 @@ public class OffreController {
         offres.add(offre2);
         offres.add(offre3);
         return offres;
-        //return offreService.getAllOffre();
+        
+ */
+        return offreService.getAllOffre();
     }
 
     @GetMapping("/{id}")
