@@ -20,7 +20,7 @@ public class QuestionController {
 
     private final QuestionService questionService;
     @PostMapping("/create")
-    public Question createQuestion(Question question) {
+    public Question createQuestion(@RequestBody Question question) {
         return questionService.createQuestion(question);
     }
 

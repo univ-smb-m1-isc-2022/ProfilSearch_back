@@ -17,7 +17,8 @@ import java.util.List;
 public class OffreController {
     private final OffreService offreService;
     @PostMapping("/create")
-    public Offre createOffre(Offre offre) {
+    public Offre createOffre(@RequestBody Offre offre) {
+        System.out.println("offre" + offre.getName() + " " + offre.getSalary());
         return offreService.createOffre(offre);
     }
 
