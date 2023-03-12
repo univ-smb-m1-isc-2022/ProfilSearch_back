@@ -1,5 +1,6 @@
 package fr.louisetom.profilsearch.model;
 
+import fr.louisetom.profilsearch.repository.OffreRepository;
 import jakarta.persistence.*;
 import lombok.Generated;
 import lombok.Getter;
@@ -20,14 +21,16 @@ public class Candidature {
     private String fname;
     private String email;
     private String cv;
-    private long id_offre;
 
-    public Candidature(String name, String fname, String email, String cv, long id_offre) {
+    @ManyToOne
+    @JoinColumn(name = "id_offre")
+    private Offre offre;
+    public Candidature(String name, String fname, String email, String cv, Offre offre) {
         this.name = name;
         this.fname = fname;
         this.email = email;
         this.cv = cv;
-        this.id_offre = id_offre;
+        this.offre = offre;
     }
 
 }
