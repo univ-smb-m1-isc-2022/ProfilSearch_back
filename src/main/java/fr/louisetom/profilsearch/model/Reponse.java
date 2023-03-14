@@ -1,5 +1,6 @@
 package fr.louisetom.profilsearch.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class Reponse {
 
     @ManyToOne
     @JoinColumn(name = "candidature_id")
+    @JsonBackReference
     public Candidature candidature;
 
     public Reponse(String reponse, Question question) {

@@ -1,5 +1,6 @@
 package fr.louisetom.profilsearch.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import fr.louisetom.profilsearch.repository.OffreRepository;
 import jakarta.persistence.*;
 import lombok.Generated;
@@ -29,6 +30,7 @@ public class Candidature {
     private Offre offre;
 
     @OneToMany(mappedBy = "candidature")
+    @JsonManagedReference
     private List<Reponse> reponses;
 
 
