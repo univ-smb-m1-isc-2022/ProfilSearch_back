@@ -30,7 +30,6 @@ public class CandidatureController {
         Candidature savedCandidature = candidatureRepository.save(candidature);
 
         for (Reponse reponse : reponses) {
-            System.out.println("reponse" + reponse.getReponse());
             Question question = questionRepository.findById(reponse.getQuestion().getId()).orElse(null);
             reponse.setQuestion(question);
             reponseRepository.save(reponse);
@@ -47,4 +46,11 @@ public class CandidatureController {
     public Candidature getCandidatureById(@PathVariable Long id) {
         return candidatureService.getCandidatureById(id);
     }
+
+    @GetMapping("/offre/{id}")
+    public List<Candidature> getCandidaturesByOffre(@PathVariable Long id) {
+        return candidatureService.getCandidaturesByOffre(id);
+    }
+
+
 }

@@ -27,4 +27,9 @@ public class CandidatureServiceImpl implements CandidatureService {
         return candidatureRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public List<Candidature> getCandidaturesByOffre(Long id) {
+        return candidatureRepository.findAllByOffreId(id);
+    }
+
 }

@@ -9,5 +9,6 @@ public interface CandidatureService {
     Candidature createCandidature(Candidature candidature);
     List<Candidature> getAllCandidature();
     Candidature getCandidatureById(Long id);
+    List<Candidature> getCandidaturesByOffre(Long id);
 
 }
