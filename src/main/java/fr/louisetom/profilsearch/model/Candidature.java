@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Candidature")
 @Getter
@@ -25,6 +27,12 @@ public class Candidature {
     @ManyToOne
     @JoinColumn(name = "id_offre")
     private Offre offre;
+
+    @OneToMany(mappedBy = "candidature")
+    private List<Reponse> reponses;
+
+
+
     public Candidature(String name, String fname, String email, String cv, Offre offre) {
         this.name = name;
         this.fname = fname;
