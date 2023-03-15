@@ -25,6 +25,8 @@ public class Candidature {
     private String email;
     private String cv;
 
+    private String token;
+
     @ManyToOne
     @JoinColumn(name = "id_offre")
     private Offre offre;
@@ -41,6 +43,11 @@ public class Candidature {
         this.email = email;
         this.cv = cv;
         this.offre = offre;
+    }
+
+    @PrePersist
+    public void generateToken() {
+        this.token = java.util.UUID.randomUUID().toString();
     }
 
 }

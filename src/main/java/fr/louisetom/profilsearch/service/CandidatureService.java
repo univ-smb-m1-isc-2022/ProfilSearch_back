@@ -11,4 +11,7 @@ public interface CandidatureService {
     Candidature getCandidatureById(Long id);
     List<Candidature> getCandidaturesByOffre(Long id);
 
+    Candidature getCandidatureByToken(String token);
+
+
 }

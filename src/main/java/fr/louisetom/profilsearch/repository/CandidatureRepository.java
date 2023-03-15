@@ -8,4 +8,6 @@ import java.util.List;
 public interface CandidatureRepository extends JpaRepository<Candidature, Long> {
 
     List<Candidature> findAllByOffreId(Long id);
+
+    Candidature findByToken(String token);
 }
