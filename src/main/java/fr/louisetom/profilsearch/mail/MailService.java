@@ -27,12 +27,12 @@ public class MailService {
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
         helper.setFrom(new InternetAddress(dotenv.get("MAIL_USERNAME"), "ProfilSearch"));
-        helper.setTo("louiisebld@gmail.com");
+        helper.setTo(candidature.getEmail());
         helper.setSubject("Supprimer vos données de candidature de ProfilSearch");
 
         String htmlMsg = "<h1>Supprimer vos données de candidature de ProfilSearch</h1>"
                 + "<p>Vous avez répondu à une candidature sur ProfilSearch, vous pouvez supprimer vos données en cliquant sur le lien suivant : </p>"
-                + "<a href='http://localhost:8080/profilsearch/candidature/delete/" + candidature.getToken() + "'>Supprimer mes données</a>"
+                + "<a href='http://localhost:4200/delete/" + candidature.getToken() + "'>Supprimer mes données</a>"
                 + "<p>Si vous n'avez pas répondu à cette candidature, vous pouvez ignorer cet email.</p>"
                 + "<p>Cordialement,</p>"
                 + "<p>L'équipe ProfilSearch</p>";
