@@ -39,6 +39,7 @@ public class CandidatureController {
     public void createCandidature(@RequestBody Candidature candidature) throws MessagingException, UnsupportedEncodingException {
         List<Reponse> reponses = candidature.getReponses();
         candidature.setReponses(null);
+
         Candidature savedCandidature = candidatureRepository.save(candidature);
 
         for (Reponse reponse : reponses) {
@@ -48,7 +49,6 @@ public class CandidatureController {
         }
         savedCandidature.setReponses(reponses);
 
-        savedCandidature.generateToken();
         mailService.sendMail(savedCandidature);
     }
 

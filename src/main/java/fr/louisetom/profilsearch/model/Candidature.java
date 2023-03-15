@@ -1,9 +1,7 @@
 package fr.louisetom.profilsearch.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import fr.louisetom.profilsearch.repository.OffreRepository;
 import jakarta.persistence.*;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +12,6 @@ import java.util.List;
 @Table(name = "Candidature")
 @Getter
 @Setter
-@NoArgsConstructor
 
 public class Candidature {
     @Id
@@ -36,18 +33,14 @@ public class Candidature {
     private List<Reponse> reponses;
 
 
-
-    public Candidature(String name, String fname, String email, String cv, Offre offre) {
-        this.name = name;
-        this.fname = fname;
-        this.email = email;
-        this.cv = cv;
-        this.offre = offre;
+    public Candidature() {
+        generateToken();
     }
 
     @PrePersist
     public void generateToken() {
         this.token = java.util.UUID.randomUUID().toString();
+        System.out.println("token generate : " + this.token);
     }
 
 }
