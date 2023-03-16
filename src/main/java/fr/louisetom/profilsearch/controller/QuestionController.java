@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/profilsearch/question")
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:3000")
 public class QuestionController {
 
     private final QuestionService questionService;
