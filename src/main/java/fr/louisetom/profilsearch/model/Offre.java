@@ -1,10 +1,10 @@
 package fr.louisetom.profilsearch.model;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,7 +34,7 @@ public class Offre {
     )
     private Set<Question> questions = new HashSet<>();
 
-    public Offre(String name, Date creation_date, String description, String type, String place, int salary, Set<Question> questions) {
+    public Offre(String name, Date creation_date, String description, String type, String place, int salary, Set<fr.louisetom.profilsearch.model.Question> questions) {
         this.name = name;
         this.creation_date = creation_date;
         this.description = description;
