@@ -29,6 +29,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
+        System.out.println(oAuth2UserRequest.getAccessToken().getTokenValue());
+        System.out.println(oAuth2UserRequest.getAccessToken().getTokenType());
+        System.out.println(oAuth2UserRequest.getAccessToken().getIssuedAt());
+
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
 
         // get url request
@@ -66,8 +70,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             }
             user = updateExistingUser(user, oAuth2UserInfo);
         } else {
-            //user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo, null);
-            user = null;
+            user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo, null);
+            //user = null;
         }
 
         return UserPrincipal.create(user, oAuth2User.getAttributes());
