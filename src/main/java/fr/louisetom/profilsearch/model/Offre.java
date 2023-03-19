@@ -26,6 +26,8 @@ public class Offre {
     private String place;
     private int salary;
 
+    private byte[] image;
+
     @ManyToMany
     @JoinTable(
             name = "question_offre",
