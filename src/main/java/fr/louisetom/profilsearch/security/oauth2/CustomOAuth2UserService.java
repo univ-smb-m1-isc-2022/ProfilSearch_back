@@ -3,10 +3,12 @@ package fr.louisetom.profilsearch.security.oauth2;
 import fr.louisetom.profilsearch.exception.OAuth2AuthenticationProcessingException;
 import fr.louisetom.profilsearch.model.AuthProvider;
 import fr.louisetom.profilsearch.model.User;
+import fr.louisetom.profilsearch.repository.InvitationRepository;
 import fr.louisetom.profilsearch.repository.UserRepository;
 import fr.louisetom.profilsearch.security.UserPrincipal;
 import fr.louisetom.profilsearch.security.oauth2.user.OAuth2UserInfo;
 import fr.louisetom.profilsearch.security.oauth2.user.OAuth2UserInfoFactory;
+import fr.louisetom.profilsearch.service.InvitationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -27,11 +29,16 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private InvitationRepository invitationRepository;
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         System.out.println(oAuth2UserRequest.getAccessToken().getTokenValue());
         System.out.println(oAuth2UserRequest.getAccessToken().getTokenType());
         System.out.println(oAuth2UserRequest.getAccessToken().getIssuedAt());
+
+        System.out.println("additionalParameters" + oAuth2UserRequest.getAdditionalParameters() );
 
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
 
@@ -70,8 +77,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             }
             user = updateExistingUser(user, oAuth2UserInfo);
         } else {
-            user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo, null);
+            //user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo, null);
             //user = null;
+
+            if (invitationRepository.findByEmail(oAuth2UserInfo.getEmail()) != null) {
+                user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo, null);
+            } else {
+                throw new OAuth2AuthenticationProcessingException("User not admited");
+            }
         }
 
         return UserPrincipal.create(user, oAuth2User.getAttributes());
