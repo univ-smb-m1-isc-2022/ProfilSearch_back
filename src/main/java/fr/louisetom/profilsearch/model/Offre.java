@@ -28,6 +28,8 @@ public class Offre {
 
     private byte[] image;
 
+    private boolean published;
+
     @ManyToMany
     @JoinTable(
             name = "question_offre",
