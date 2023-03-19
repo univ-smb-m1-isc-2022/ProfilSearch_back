@@ -1,11 +1,11 @@
 package fr.louisetom.profilsearch.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -26,11 +26,11 @@ public class Candidature {
 
     @ManyToOne
     @JoinColumn(name = "id_offre")
-    private Offre offre;
+    private fr.louisetom.profilsearch.model.Offre offre;
 
     @OneToMany(mappedBy = "candidature")
     @JsonManagedReference
-    private List<Reponse> reponses;
+    private List<fr.louisetom.profilsearch.model.Reponse> reponses;
 
 
     public Candidature() {

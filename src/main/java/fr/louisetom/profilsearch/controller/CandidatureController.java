@@ -11,20 +11,20 @@ import fr.louisetom.profilsearch.repository.QuestionRepository;
 import fr.louisetom.profilsearch.repository.ReponseRepository;
 import fr.louisetom.profilsearch.service.CandidatureService;
 import io.github.cdimascio.dotenv.Dotenv;
-import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/profilsearch/candidature")
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CandidatureController {
     private final CandidatureService candidatureService;
     private final CandidatureRepository candidatureRepository;

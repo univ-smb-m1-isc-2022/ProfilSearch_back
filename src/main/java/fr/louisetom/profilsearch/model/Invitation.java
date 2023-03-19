@@ -7,17 +7,14 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Question")
+@Table(name = "Invitation")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Question {
+public class Invitation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
-    public String question;
+    public String email;
 
-    public Question(String question) {
-        this.question = question;
-    }
 }
