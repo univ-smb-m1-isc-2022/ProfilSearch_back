@@ -28,6 +28,7 @@ public class Offre {
 
     private byte[] image;
 
+    @Column(columnDefinition = "boolean default false")
     private boolean published;
 
     @ManyToMany
