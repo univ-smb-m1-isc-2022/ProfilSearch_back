@@ -36,21 +36,12 @@ public class OffreControllerTest {
     @Autowired
     public MockMvc mockMvc;
 
-
-
     @Test
-    public void testGetAllOffre() throws Exception {
-        mockMvc.perform(get("/profilsearch/offre/all"))
-                .andExpect(status().isOk()).andExpect(jsonPath("$[0].name", is("Dev Java")));
-    }
-
-
-    /*public void createOffreTest() throws Exception {
+    public void testCreateOffre() throws Exception {
         // Créer un objet Offre
-        Offre offre = new Offre("Dev Java", new Date(), "Description", "CDI", "Paris", 3000, null);
+        Offre offre = new Offre("Dev Web", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDI", "Paris", 3000, null);
+        offre.setId(0L);
 
-        // Simuler l'ajout de l'offre à la base de données
-        when(offreService.createOffre(offre)).thenReturn(offre);
 
         // Convertir l'objet Offre en JSON
         String offreJson = new ObjectMapper().writeValueAsString(offre);
@@ -64,8 +55,32 @@ public class OffreControllerTest {
                 .andExpect(status().isOk())
 
                 // Vérifier que l'objet Offre créé a les mêmes attributs que ceux spécifiés dans la méthode createOffreTest()
-                .andExpect(jsonPath("$.name").value("Dev Java"))
-                .andExpect(jsonPath("$.city").value("Paris"))
+                .andExpect(jsonPath("$.name").value("Dev Web"))
+                .andExpect(jsonPath("$.description").value("Lorem Ipsum is simply dummy text of the printing and typesetting industry."))
+                .andExpect(jsonPath("$.type").value("CDI"))
+                .andExpect(jsonPath("$.place").value("Paris"))
                 .andExpect(jsonPath("$.salary").value(3000));
-    }*/
+    }
+
+    @Test
+    public void testGetOffreById() throws Exception {
+        mockMvc.perform(get("/profilsearch/offre/0"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is("Dev Web")))
+                .andExpect(jsonPath("$.description", is("Lorem Ipsum is simply dummy text of the printing and typesetting industry.")))
+                .andExpect(jsonPath("$.type", is("CDI")))
+                .andExpect(jsonPath("$.place", is("Paris")))
+                .andExpect(jsonPath("$.salary", is(3000)));
+    }
+
+    @Test
+    public void testGetAllOffre() throws Exception {
+        mockMvc.perform(get("/profilsearch/offre/all"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name", is("Dev Web")))
+                .andExpect(jsonPath("$[0].description", is("Lorem Ipsum is simply dummy text of the printing and typesetting industry.")))
+                .andExpect(jsonPath("$[0].type", is("CDI")))
+                .andExpect(jsonPath("$[0].place", is("Paris")))
+                .andExpect(jsonPath("$[0].salary", is(3000)));
+    }
 }
