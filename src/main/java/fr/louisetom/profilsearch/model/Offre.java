@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,6 +31,12 @@ public class Offre {
 
     @Column(columnDefinition = "boolean default false")
     private boolean published;
+
+    // tableaux de string bullet points
+    @ElementCollection
+    @CollectionTable(name = "offre_bullets", joinColumns = @JoinColumn(name = "offre_id"))
+    @Column(name = "bullet")
+    private List<String> bullets;
 
     @ManyToMany
     @JoinTable(
