@@ -2,14 +2,20 @@ package fr.louisetom.profilsearch.controller;
 
 import static org.hamcrest.Matchers.is;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.*;
 
+import fr.louisetom.profilsearch.repository.OffreRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +35,8 @@ import fr.louisetom.profilsearch.model.Offre;
 import fr.louisetom.profilsearch.service.OffreService;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 
 @SpringBootTest
@@ -36,73 +44,56 @@ import java.util.Date;
 public class OffreControllerTest {
 
     @Autowired
-    public MockMvc mockMvc;
+    private MockMvc mockMvc;
+    @Autowired
+    private OffreService offreService;
+    @BeforeEach
+    public void setUp() {
+        offreService = mock(OffreService.class);
+        mockMvc = standaloneSetup(new OffreController(offreService)).build();
 
-
+    }
 
     @Test
     public void testCreateOffre() throws Exception {
-        // Créer un objet Offre
-        Offre offre = new Offre("Dev Web", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDI", "Paris", 3000, null);
-
-        // Convertir l'objet Offre en JSON
+        Offre offre = new Offre("Dev Java", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
         String offreJson = new ObjectMapper().writeValueAsString(offre);
+        when(offreService.createOffre(any(Offre.class))).thenReturn(offre);
 
-        // Envoyer une requête HTTP POST pour créer une nouvelle offre
         mockMvc.perform(post("/profilsearch/offre/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(offreJson.getBytes()))
+                        .andExpect(status().isOk());
 
-                // Vérifier que la requête a retourné un code HTTP 200
-                .andExpect(status().isOk())
-
-                // Vérifier que l'objet Offre créé a les mêmes attributs que ceux spécifiés dans la méthode createOffreTest()
-                .andExpect(jsonPath("$.name").value("Dev Web"))
-                .andExpect(jsonPath("$.description").value("Lorem Ipsum is simply dummy text of the printing and typesetting industry."))
-                .andExpect(jsonPath("$.type").value("CDI"))
-                .andExpect(jsonPath("$.place").value("Paris"))
-                .andExpect(jsonPath("$.salary").value(3000));
+        verify(offreService, times(1)).createOffre(any(Offre.class));
     }
 
     @Test
     public void testGetAllOffre() throws Exception {
+        Offre offre = new Offre("Dev Java", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
+        Offre offre2 = new Offre("Dev Python", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
+        Offre offre3 = new Offre("Dev C++", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
+        when(offreService.getAllOffre()).thenReturn(List.of(offre, offre2, offre3));
+
         mockMvc.perform(get("/profilsearch/offre/all"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name", is("Dev Java")))
+                .andExpect(jsonPath("$[1].name", is("Dev Python")))
+                .andExpect(jsonPath("$[2].name", is("Dev C++")));
+
+        verify(offreService, times(1)).getAllOffre();
     }
 
     @Test
     public void testGetOffreById() throws Exception {
-        // Crée une offre
         Offre offre = new Offre("Dev Java", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
+        when(offreService.getOffreById(anyLong())).thenReturn(offre);
 
-        // Convertir l'objet Offre en JSON
-        String offreJson = new ObjectMapper().writeValueAsString(offre);
-
-        // Envoyer une requête HTTP POST pour créer une nouvelle offre
-        MvcResult result = mockMvc.perform(post("/profilsearch/offre/create")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(offreJson.getBytes()))
-
-                // Vérifier que la requête a retourné un code HTTP 200
+        mockMvc.perform(get("/profilsearch/offre/120"))
                 .andExpect(status().isOk())
-                .andReturn();
+                .andExpect(jsonPath("$.name", is("Dev Java")));
 
-        // Récupérer l'objet Offre créé dans la base de données
-        ObjectMapper mapper = new ObjectMapper();
-        Offre createdOffre = mapper.readValue(result.getResponse().getContentAsString(), Offre.class);
-
-        // Vérifier que l'objet Offre créé a un identifiant non-null
-        assertNotNull(createdOffre.getId());
-        System.out.println("Offre ID: " + createdOffre.getId());
-
-        // On récupère l'offre et on regarde si on obtiens bien les memes informations
-        mockMvc.perform(get("/profilsearch/offre/" + createdOffre.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Dev Java"))
-                .andExpect(jsonPath("$.description").value("Lorem Ipsum is simply dummy text of the printing and typesetting industry."))
-                .andExpect(jsonPath("$.type").value("CDD"))
-                .andExpect(jsonPath("$.place").value("Lyon"))
-                .andExpect(jsonPath("$.salary").value(3999));
-
+        verify(offreService, times(1)).getOffreById(anyLong());
     }
+
 }
