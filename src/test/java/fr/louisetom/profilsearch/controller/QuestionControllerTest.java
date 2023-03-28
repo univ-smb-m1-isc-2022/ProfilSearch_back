@@ -32,6 +32,8 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.List;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class QuestionControllerTest {
@@ -59,5 +61,21 @@ public class QuestionControllerTest {
                         .andExpect(status().isOk());
 
         verify(questionService, times(1)).createQuestion(any(Question.class));
+    }
+
+    @Test
+    public void testGetAllQuestion() throws Exception {
+        Question question = new Question("Tu aimes le Java ?");
+        Question question2 = new Question("Tu aimes le Python ?");
+        Question question3 = new Question("Tu aimes le C++ ?");
+        when(questionService.getAllQuestion()).thenReturn(List.of(question, question2, question3));
+
+        mockMvc.perform(get("/profilsearch/question/all"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].question", is("Tu aimes le Java ?")))
+                .andExpect(jsonPath("$[1].question", is("Tu aimes le Python ?")))
+                .andExpect(jsonPath("$[2].question", is("Tu aimes le C++ ?")));
+
+        verify(questionService, times(1)).getAllQuestion();
     }
 }
