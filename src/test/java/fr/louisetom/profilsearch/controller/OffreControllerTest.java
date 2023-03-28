@@ -89,7 +89,7 @@ public class OffreControllerTest {
         Offre offre = new Offre("Dev Java", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
         when(offreService.getOffreById(anyLong())).thenReturn(offre);
 
-        mockMvc.perform(get("/profilsearch/offre/120"))
+        mockMvc.perform(get("/profilsearch/offre/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is("Dev Java")));
 

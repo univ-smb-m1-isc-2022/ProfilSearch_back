@@ -78,4 +78,16 @@ public class QuestionControllerTest {
 
         verify(questionService, times(1)).getAllQuestion();
     }
+
+    @Test
+    public void testGetQuestionById() throws Exception {
+        Question question = new Question("J'adore le Japon !");
+        when(questionService.getQuestionById(anyLong())).thenReturn(question);
+
+        mockMvc.perform(get("/profilsearch/question/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.question", is("J'adore le Japon !")));
+
+        verify(questionService, times(1)).getQuestionById(anyLong());
+    }
 }
