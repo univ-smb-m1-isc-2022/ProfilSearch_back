@@ -51,43 +51,58 @@ public class QuestionControllerTest {
 
     @Test
     public void testCreateQuestion() throws Exception {
+        // Creation de la question
         Question question = new Question("Tu aimes le Java ?");
         String questionJson  = new ObjectMapper().writeValueAsString(question);
+
+        // Mock de la methode createQuestion
         when(questionService.createQuestion(any(Question.class))).thenReturn(question);
 
+        // Test de la methode createQuestion avec la question créée précédemment
         mockMvc.perform(post("/profilsearch/question/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(questionJson.getBytes()))
                         .andExpect(status().isOk());
 
+        // Verification que la methode createQuestion a bien été appelée une fois
         verify(questionService, times(1)).createQuestion(any(Question.class));
     }
 
     @Test
     public void testGetAllQuestion() throws Exception {
+        // Creation de 3 questions
         Question question = new Question("Tu aimes le Java ?");
         Question question2 = new Question("Tu aimes le Python ?");
         Question question3 = new Question("Tu aimes le C++ ?");
+
+        // Mock de la methode getAllQuestion
         when(questionService.getAllQuestion()).thenReturn(List.of(question, question2, question3));
 
+        // Test de la methode getAllQuestion avec les 3 questions créées précédemment et vérification des réponses attendues : 200 et les 3 questions
         mockMvc.perform(get("/profilsearch/question/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].question", is("Tu aimes le Java ?")))
                 .andExpect(jsonPath("$[1].question", is("Tu aimes le Python ?")))
                 .andExpect(jsonPath("$[2].question", is("Tu aimes le C++ ?")));
 
+        // Verification que la methode getAllQuestion a bien été appelée une fois
         verify(questionService, times(1)).getAllQuestion();
     }
 
     @Test
     public void testGetQuestionById() throws Exception {
+        // Creation de la question
         Question question = new Question("J'adore le Japon !");
+
+        // Mock de la methode getQuestionById avec l'id 1 et la question créée précédemment
         when(questionService.getQuestionById(anyLong())).thenReturn(question);
 
+        // Test de la methode getQuestionById avec l'id 1 et vérification des réponses attendues : 200 et la question
         mockMvc.perform(get("/profilsearch/question/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.question", is("J'adore le Japon !")));
 
+        // Verification que la methode getQuestionById a bien été appelée une fois
         verify(questionService, times(1)).getQuestionById(anyLong());
     }
 }

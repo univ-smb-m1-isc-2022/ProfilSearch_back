@@ -56,43 +56,58 @@ public class OffreControllerTest {
 
     @Test
     public void testCreateOffre() throws Exception {
+        //Creation de l'offre
         Offre offre = new Offre("Dev Java", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
         String offreJson = new ObjectMapper().writeValueAsString(offre);
+
+        //Mock de la methode createOffre
         when(offreService.createOffre(any(Offre.class))).thenReturn(offre);
 
+        //Test de la methode createOffre avec l'offre
         mockMvc.perform(post("/profilsearch/offre/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(offreJson.getBytes()))
                         .andExpect(status().isOk());
 
-        verify(offreService, times(1)).createOffre(any(Offre.class));
+        // Verification que la methode createOffre a bien ete appelee 1 seule fois
+         verify(offreService, times(1)).createOffre(any(Offre.class));
     }
 
     @Test
     public void testGetAllOffre() throws Exception {
+        // Creation de 3 offres
         Offre offre = new Offre("Dev Java", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
         Offre offre2 = new Offre("Dev Python", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
         Offre offre3 = new Offre("Dev C++", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
+
+        // Mock de la methode getAllOffre
         when(offreService.getAllOffre()).thenReturn(List.of(offre, offre2, offre3));
 
+        // Test de la methode getAllOffre qui doit retourner les 3 offres
         mockMvc.perform(get("/profilsearch/offre/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name", is("Dev Java")))
                 .andExpect(jsonPath("$[1].name", is("Dev Python")))
                 .andExpect(jsonPath("$[2].name", is("Dev C++")));
 
+        // Verification que la methode getAllOffre a bien ete appelee 1 seule fois
         verify(offreService, times(1)).getAllOffre();
     }
 
     @Test
     public void testGetOffreById() throws Exception {
+        // Creation d'une offre
         Offre offre = new Offre("Dev Java", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
+
+        // Mock de la methode getOffreById
         when(offreService.getOffreById(anyLong())).thenReturn(offre);
 
+        // Test de la methode getOffreById qui doit retourner l'offre
         mockMvc.perform(get("/profilsearch/offre/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is("Dev Java")));
 
+        // Verification que la methode getOffreById a bien ete appelee 1 seule fois
         verify(offreService, times(1)).getOffreById(anyLong());
     }
 
