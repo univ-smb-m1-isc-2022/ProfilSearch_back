@@ -9,4 +9,6 @@ public interface ReponseService {
     Reponse createReponse(Reponse reponse);
     List<Reponse> getAllReponse();
     Reponse getReponseById(Long id);
+
+    void delete(Reponse reponse);
 }

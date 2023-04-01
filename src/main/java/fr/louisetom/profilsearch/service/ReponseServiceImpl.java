@@ -28,4 +28,9 @@ public class ReponseServiceImpl implements ReponseService {
     public Reponse getReponseById(Long id) {
         return reponseRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public void delete(Reponse reponse) {
+        reponseRepository.delete(reponse);
+    }
 }

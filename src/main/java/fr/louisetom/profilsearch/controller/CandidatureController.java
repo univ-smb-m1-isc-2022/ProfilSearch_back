@@ -10,6 +10,8 @@ import fr.louisetom.profilsearch.repository.CandidatureRepository;
 import fr.louisetom.profilsearch.repository.QuestionRepository;
 import fr.louisetom.profilsearch.repository.ReponseRepository;
 import fr.louisetom.profilsearch.service.CandidatureService;
+import fr.louisetom.profilsearch.service.QuestionService;
+import fr.louisetom.profilsearch.service.ReponseService;
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +29,9 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class CandidatureController {
     private final CandidatureService candidatureService;
-    private final CandidatureRepository candidatureRepository;
-    private final QuestionRepository questionRepository;
-    private final ReponseRepository reponseRepository;
+
+    private final ReponseService reponseService;
+    private final QuestionService questionService;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -40,12 +42,12 @@ public class CandidatureController {
         List<Reponse> reponses = candidature.getReponses();
         candidature.setReponses(null);
 
-        Candidature savedCandidature = candidatureRepository.save(candidature);
+        Candidature savedCandidature = candidatureService.createCandidature(candidature);
 
         for (Reponse reponse : reponses) {
-            Question question = questionRepository.findById(reponse.getQuestion().getId()).orElse(null);
+            Question question = questionService.getQuestionById(reponse.getQuestion().getId());
             reponse.setQuestion(question);
-            reponseRepository.save(reponse);
+            reponseService.createReponse(reponse);
         }
         savedCandidature.setReponses(reponses);
 
@@ -69,16 +71,16 @@ public class CandidatureController {
 
     @GetMapping("/token/{token}")
     public Candidature getCandidatureByToken(@PathVariable String token) {
-        return candidatureRepository.findByToken(token);
+        return candidatureService.getCandidatureByToken(token);
     }
 
     @GetMapping("/delete/{token}")
     public void deleteCandidatureByToken(@PathVariable String token) {
-        Candidature candidature = candidatureRepository.findByToken(token);
+        Candidature candidature = candidatureService.getCandidatureByToken(token);
         for (Reponse reponse : candidature.getReponses()) {
-            reponseRepository.delete(reponse);
+            reponseService.delete(reponse);
         }
-        candidatureRepository.delete(candidature);
+        candidatureService.deleteCandidature(candidature);
     }
 
 

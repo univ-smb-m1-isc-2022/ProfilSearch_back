@@ -43,4 +43,9 @@ public class CandidatureServiceImpl implements CandidatureService {
         return candidatureRepository.findByToken(token);
     }
 
+    @Override
+    public void deleteCandidature(Candidature candidature) {
+        candidatureRepository.delete(candidature);
+    }
+
 }

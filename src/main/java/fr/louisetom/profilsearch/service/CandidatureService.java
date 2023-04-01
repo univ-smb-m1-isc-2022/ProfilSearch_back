@@ -13,5 +13,7 @@ public interface CandidatureService {
 
     Candidature getCandidatureByToken(String token);
 
+    void deleteCandidature(Candidature candidature);
+
 
 }
