@@ -28,9 +28,10 @@ public class Reponse {
     @JsonBackReference
     public Candidature candidature;
 
-    public Reponse(String reponse, Question question) {
+    public Reponse(String reponse, Question question, Candidature candidature) {
         this.reponse = reponse;
         this.question = question;
+        this.candidature = candidature;
     }
 
 }

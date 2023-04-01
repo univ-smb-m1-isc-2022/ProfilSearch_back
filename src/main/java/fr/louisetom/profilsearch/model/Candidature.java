@@ -37,6 +37,15 @@ public class Candidature {
         generateToken();
     }
 
+    public Candidature(String name, String fname, String email, fr.louisetom.profilsearch.model.Offre offre) {
+        this.name = name;
+        this.fname = fname;
+        this.email = email;
+        this.cv = cv;
+        this.offre = offre;
+        generateToken();
+    }
+
     @PrePersist
     public void generateToken() {
         this.token = java.util.UUID.randomUUID().toString();
