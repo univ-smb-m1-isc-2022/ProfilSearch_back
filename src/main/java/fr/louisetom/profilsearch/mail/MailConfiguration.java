@@ -1,7 +1,6 @@
 package fr.louisetom.profilsearch.mail;
 
 import fr.louisetom.profilsearch.model.Candidature;
-import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,9 +10,7 @@ import java.util.Properties;
 
 @Configuration
 public class MailConfiguration {
-
-    private final Dotenv dotenv = Dotenv.load();
-
+    
     @Bean
     public JavaMailSender getJavaMailSender() {
 

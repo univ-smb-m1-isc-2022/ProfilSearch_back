@@ -12,7 +12,6 @@ import fr.louisetom.profilsearch.repository.ReponseRepository;
 import fr.louisetom.profilsearch.service.CandidatureService;
 import fr.louisetom.profilsearch.service.QuestionService;
 import fr.louisetom.profilsearch.service.ReponseService;
-import io.github.cdimascio.dotenv.Dotenv;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

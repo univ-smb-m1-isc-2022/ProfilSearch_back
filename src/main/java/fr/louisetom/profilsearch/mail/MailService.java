@@ -2,7 +2,6 @@ package fr.louisetom.profilsearch.mail;
 
 import fr.louisetom.profilsearch.model.Candidature;
 import fr.louisetom.profilsearch.model.Invitation;
-import io.github.cdimascio.dotenv.Dotenv;
 import lombok.experimental.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -26,8 +25,6 @@ public class MailService {
 
     @Autowired
     private JavaMailSender javaMailSender;
-    private final Dotenv dotenv = Dotenv.load();
-
 
     public void sendMail(Candidature candidature) throws MessagingException, UnsupportedEncodingException {
 
