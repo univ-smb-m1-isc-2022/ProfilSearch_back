@@ -38,9 +38,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-//@ActiveProfiles("test")
 public class OffreControllerTest {
 
     @Autowired
@@ -53,6 +50,7 @@ public class OffreControllerTest {
         mockMvc = standaloneSetup(new OffreController(offreService)).build();
     }
 
+    /*
     @Test
     public void testCreateOffre() throws Exception {
         /*
@@ -72,10 +70,10 @@ public class OffreControllerTest {
         // Verification que la methode createOffre a bien ete appelee 1 seule fois
          verify(offreService, times(1)).createOffre(any(Offre.class));
 
-         */
+
     }
 
-    /*
+
     @Test
     public void testGetAllOffre() throws Exception {
         // Creation de 3 offres
