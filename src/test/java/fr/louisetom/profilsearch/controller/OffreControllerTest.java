@@ -50,10 +50,10 @@ public class OffreControllerTest {
         mockMvc = standaloneSetup(new OffreController(offreService)).build();
     }
 
-    /*
+
     @Test
     public void testCreateOffre() throws Exception {
-        /*
+
         //Creation de l'offre
         Offre offre = new Offre("Dev Java", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
         String offreJson = new ObjectMapper().writeValueAsString(offre);
@@ -112,6 +112,5 @@ public class OffreControllerTest {
         verify(offreService, times(1)).getOffreById(anyLong());
     }
 
-     */
 
 }
