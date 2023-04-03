@@ -28,12 +28,16 @@ public class MailService {
     private JavaMailSender javaMailSender;
     private final Dotenv dotenv = Dotenv.load();
 
+
     public void sendMail(Candidature candidature) throws MessagingException, UnsupportedEncodingException {
 
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-        helper.setFrom(new InternetAddress(dotenv.get("MAIL_USERNAME"), "ProfilSearch"));
+        String MAIL_USERNAME="profilsearch.help@gmail.com";
+        String MAIL_PASSWORD="qmtgzqtyldlgzmah";
+
+        helper.setFrom(new InternetAddress(MAIL_USERNAME, "ProfilSearch"));
         helper.setTo(candidature.getEmail());
         helper.setSubject("Supprimer vos données de candidature de ProfilSearch");
 
@@ -54,7 +58,10 @@ public class MailService {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED, "UTF-8");
 
-        helper.setFrom(new InternetAddress(dotenv.get("MAIL_USERNAME"), "ProfilSearch"));
+        String MAIL_USERNAME="profilsearch.help@gmail.com";
+        String MAIL_PASSWORD="qmtgzqtyldlgzmah";
+
+        helper.setFrom(new InternetAddress(MAIL_USERNAME, "ProfilSearch"));
         helper.setTo(invitation.getEmail());
         helper.setSubject("Invitation à devenir administrateur de ProfilSearch");
 

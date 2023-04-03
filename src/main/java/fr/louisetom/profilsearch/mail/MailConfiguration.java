@@ -21,8 +21,13 @@ public class MailConfiguration {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-        mailSender.setUsername(dotenv.get("MAIL_USERNAME"));
-        mailSender.setPassword(dotenv.get("MAIL_PASSWORD"));
+
+        String MAIL_USERNAME="profilsearch.help@gmail.com";
+        String MAIL_PASSWORD="qmtgzqtyldlgzmah";
+
+
+        mailSender.setUsername(MAIL_USERNAME);
+        mailSender.setPassword(MAIL_PASSWORD);
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
