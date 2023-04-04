@@ -40,7 +40,7 @@ public class MailService {
 
         String htmlMsg = "<h1>Supprimer vos données de candidature de ProfilSearch</h1>"
                 + "<p>Vous avez répondu à une candidature sur ProfilSearch, vous pouvez supprimer vos données en cliquant sur le lien suivant : </p>"
-                + "<a href='http://localhost:3000/delete/" + candidature.getToken() + "'>Supprimer mes données</a>"
+                + "<a href='https://profilsearch.oups.net/delete/" + candidature.getToken() + "'>Supprimer mes données</a>"
                 + "<p>Si vous n'avez pas répondu à cette candidature, vous pouvez ignorer cet email.</p>"
                 + "<p>Cordialement,</p>"
                 + "<p>L'équipe ProfilSearch</p>";
@@ -68,7 +68,7 @@ public class MailService {
 
         String htmlMsg = "<h1>Devenez administrateur de ProfilSearch</h1>" +
                 "Vous avez été invité à devenir administrateur de ProfilSearch, cliquez sur le lien suivant pour vous inscrire : </p>"
-                + "<a href='http://localhost:3000/signup'> S'inscrire </a>"
+                + "<a href='https://profilsearch.oups.net/signup'> S'inscrire </a>"
                 + "<p>Si vous ne connaissez pas ProfilSearch, vous pouvez ignorer cet email.</p>"
                 + "<p>Cordialement,</p>"
                 + "<p>L'équipe ProfilSearch</p>"
