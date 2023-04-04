@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/profilsearch/offre")
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://profilsearch.oups.net"})
 public class OffreController {
     private final OffreService offreService;
     @PostMapping("/create")

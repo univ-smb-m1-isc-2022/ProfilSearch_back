@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/profilsearch/invitation")
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://profilsearch.oups.net"})
 public class InvitationController {
 
     private final InvitationService invitationService;
