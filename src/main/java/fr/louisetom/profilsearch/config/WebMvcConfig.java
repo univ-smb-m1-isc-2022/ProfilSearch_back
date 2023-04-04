@@ -10,7 +10,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     private final long MAX_AGE_SECS = 3600;
 
-    @Value("https://profilsearch.oups.net")
+    @Value("http://localhost:3000")
     private String[] allowedOrigins;
 
     @Override

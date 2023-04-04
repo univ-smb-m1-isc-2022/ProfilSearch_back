@@ -94,7 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .configurationSource(
                         request -> {
                             CorsConfiguration cors = new CorsConfiguration();
-                            cors.setAllowedOrigins(Collections.singletonList("https://profilsearch.oups.net"));
+                            cors.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
                             cors.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                             cors.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
                             cors.setAllowCredentials(true);
