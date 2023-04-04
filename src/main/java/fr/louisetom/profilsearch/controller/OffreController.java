@@ -46,7 +46,7 @@ public class OffreController {
 
     @GetMapping("/test")
     public String test() {
-        return "testALL";
+        return "testdebug";
     }
 
 }
