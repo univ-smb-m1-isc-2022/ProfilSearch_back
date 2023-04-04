@@ -43,4 +43,12 @@ public class OffreController {
         return offreService.getOffreById(id);
     }
 
+
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }
+
 }
+
+
