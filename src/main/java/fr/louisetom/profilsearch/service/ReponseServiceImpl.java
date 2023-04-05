@@ -27,7 +27,6 @@ public class ReponseServiceImpl implements ReponseService {
 
     @Override
     public Optional<Reponse> getReponseById(Long id) {
-        System.out.println("Reponse not found");
         return reponseRepository.findById(id);
     }
 

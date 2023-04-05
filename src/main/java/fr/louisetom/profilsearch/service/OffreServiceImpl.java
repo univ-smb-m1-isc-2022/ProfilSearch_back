@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -22,8 +23,8 @@ public class OffreServiceImpl implements OffreService {
     }
 
     @Override
-    public Offre getOffreById(Long id) {
-        return offreRepository.findById(id).orElse(null);
+    public Optional<Offre> getOffreById(Long id) {
+        return offreRepository.findById(id);
     }
 
 }

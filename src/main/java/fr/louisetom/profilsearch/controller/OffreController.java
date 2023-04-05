@@ -3,12 +3,10 @@ package fr.louisetom.profilsearch.controller;
 import fr.louisetom.profilsearch.model.Offre;
 import fr.louisetom.profilsearch.service.OffreService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.AbstractList;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/profilsearch/offre")
@@ -39,8 +37,10 @@ public class OffreController {
     }
 
     @GetMapping("/{id}")
-    public Offre getOffreById(@PathVariable Long id) {
-        return offreService.getOffreById(id);
+    public ResponseEntity<Offre> getOffreById(@PathVariable Long id) {
+        Optional<Offre> reponse = offreService.getOffreById(id);
+        return reponse.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 

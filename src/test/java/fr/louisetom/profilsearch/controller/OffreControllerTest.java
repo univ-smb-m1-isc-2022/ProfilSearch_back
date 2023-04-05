@@ -101,7 +101,7 @@ public class OffreControllerTest {
         Offre offre = new Offre("Dev Java", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
 
         // Mock de la methode getOffreById
-        when(offreService.getOffreById(anyLong())).thenReturn(offre);
+        when(offreService.getOffreById(anyLong())).thenReturn(Optional.of(offre));
 
         // Test de la methode getOffreById qui doit retourner l'offre
         mockMvc.perform(get("/profilsearch/offre/1"))
@@ -112,5 +112,13 @@ public class OffreControllerTest {
         verify(offreService, times(1)).getOffreById(anyLong());
     }
 
+    @Test
+    public void shouldReturnNotFound() throws Exception {
+        // Mock de la methode getOffreById
+        when(offreService.getOffreById(anyLong())).thenReturn(Optional.empty());
 
+        // Test de la methode getOffreById qui doit retourner une erreur 404
+        mockMvc.perform(get("/profilsearch/offre/3"))
+                .andExpect(status().isNotFound());
+    }
 }
