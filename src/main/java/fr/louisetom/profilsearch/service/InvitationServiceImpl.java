@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +25,7 @@ public class InvitationServiceImpl implements InvitationService {
     }
 
     @Override
-    public Invitation getInvitationByEmail(String string) {
+    public Optional<Invitation> getInvitationByEmail(String string) {
         return invitationRepository.findByEmail(string);
     }
 

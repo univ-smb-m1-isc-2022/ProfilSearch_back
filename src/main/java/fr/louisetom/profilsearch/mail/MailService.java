@@ -51,7 +51,7 @@ public class MailService {
         helper.setText(htmlMsg, true);
 
         //helper.addInline(contentId, imageResource, "image/png");
-        
+
         this.javaMailSender.send(message);
 
     }
