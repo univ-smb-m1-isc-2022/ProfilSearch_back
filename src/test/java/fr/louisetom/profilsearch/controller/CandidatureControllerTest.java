@@ -1,6 +1,6 @@
 package fr.louisetom.profilsearch.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.louisetom.profilsearch.mail.MailService;
 import fr.louisetom.profilsearch.model.Candidature;
@@ -12,9 +12,7 @@ import fr.louisetom.profilsearch.service.OffreService;
 import fr.louisetom.profilsearch.service.QuestionService;
 import fr.louisetom.profilsearch.service.ReponseService;
 import static org.hamcrest.Matchers.is;
-import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -23,27 +21,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 import static org.mockito.Mockito.*;
-import static org.mockito.ArgumentMatchers.*;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
+
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.louisetom.profilsearch.controller.OffreController;
-import fr.louisetom.profilsearch.model.Offre;
-import fr.louisetom.profilsearch.service.OffreService;
+
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.*;

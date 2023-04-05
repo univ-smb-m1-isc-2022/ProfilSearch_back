@@ -1,9 +1,6 @@
 package fr.louisetom.profilsearch.controller;
 
 import static org.hamcrest.Matchers.is;
-import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -12,25 +9,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 import static org.mockito.Mockito.*;
-import static org.mockito.ArgumentMatchers.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
+
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.louisetom.profilsearch.controller.OffreController;
+
 import fr.louisetom.profilsearch.model.Offre;
 import fr.louisetom.profilsearch.service.OffreService;
 
@@ -53,25 +43,25 @@ public class OffreControllerTest {
 
     @Test
     public void testCreateOffre() throws Exception {
-
-        //Creation de l'offre
+        // Création d'un objet Offre
         Offre offre = new Offre("Dev Java", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
+
+        // Convertir l'objet Offre en JSON
         String offreJson = new ObjectMapper().writeValueAsString(offre);
 
-        //Mock de la methode createOffre
+        // Simulation de l'appel de la méthode createOffre du service OffreService
         when(offreService.createOffre(any(Offre.class))).thenReturn(offre);
 
-        //Test de la methode createOffre avec l'offre
+        // Envoi d'une requête POST pour créer une nouvelle offre
         mockMvc.perform(post("/profilsearch/offre/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(offreJson.getBytes()))
-                        .andExpect(status().isOk());
+                .andExpect(status().isOk());
 
-        // Verification que la methode createOffre a bien ete appelee 1 seule fois
-         verify(offreService, times(1)).createOffre(any(Offre.class));
-
-
+        // Vérification que la méthode createOffre du service OffreService a été appelée une fois avec n'importe quelle instance d'Offre
+        verify(offreService, times(1)).createOffre(any(Offre.class));
     }
+
 
 
     @Test
@@ -81,10 +71,10 @@ public class OffreControllerTest {
         Offre offre2 = new Offre("Dev Python", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
         Offre offre3 = new Offre("Dev C++", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
 
-        // Mock de la methode getAllOffre
+        // Simulation de l'appel de la methode getAllOffre du service OffreService
         when(offreService.getAllOffre()).thenReturn(List.of(offre, offre2, offre3));
 
-        // Test de la methode getAllOffre qui doit retourner les 3 offres
+        // Envoie d'une requete GET pour recuperer toutes les offres
         mockMvc.perform(get("/profilsearch/offre/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name", is("Dev Java")))
@@ -100,10 +90,10 @@ public class OffreControllerTest {
         // Creation d'une offre
         Offre offre = new Offre("Dev Java", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, null);
 
-        // Mock de la methode getOffreById
+        // Simulation de l'appel de la methode getOffreById du service OffreService
         when(offreService.getOffreById(anyLong())).thenReturn(Optional.of(offre));
 
-        // Test de la methode getOffreById qui doit retourner l'offre
+        // Envoie d'une requete GET pour recuperer une offre par son id
         mockMvc.perform(get("/profilsearch/offre/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is("Dev Java")));
@@ -114,10 +104,10 @@ public class OffreControllerTest {
 
     @Test
     public void shouldReturnNotFound() throws Exception {
-        // Mock de la methode getOffreById
+        // Simulation de l'appel de la methode getOffreById du service OffreService
         when(offreService.getOffreById(anyLong())).thenReturn(Optional.empty());
 
-        // Test de la methode getOffreById qui doit retourner une erreur 404
+        // Envoie d'une requete GET pour recuperer une offre par son id qui n'existe pas
         mockMvc.perform(get("/profilsearch/offre/3"))
                 .andExpect(status().isNotFound());
     }
