@@ -88,6 +88,4 @@ public class CandidatureController {
         }
         candidatureService.deleteCandidature(candidature);
     }
-
-
 }

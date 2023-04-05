@@ -219,4 +219,30 @@ public class CandidatureControllerTest {
                 .andExpect(jsonPath("$[1].fname", is("Duck")))
                 .andExpect(jsonPath("$[1].email", is("daffy@duck.com")));
     }
+
+    @Test
+    public void shouldDeleteCandidatureByToken () throws Exception {
+        Question question1 = new Question("Vos qualités ?");
+        question1.setId(3L);
+        Question question2 = new Question("Pourquoi voulez-vous travailler avec nous ?");
+        question2.setId(4L);
+        Set<Question> questions = new HashSet<>(Arrays.asList(question1, question2));
+
+        // Créer un objet Offre à utiliser pour la candidature
+        Offre offre = new Offre("Dev Java", new Date(), "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", "CDD", "Lyon", 3999, questions);
+        offre.setId(4L);
+
+        // Créer un objet Candidature à partir des données que vous avez fournies
+        Candidature candidature1 = new Candidature("Doe", "John", "john@doe.com", offre);
+        candidature1.setId(5L);
+        List<Reponse> reponses = new ArrayList<>();
+        reponses.add(new Reponse("Réponse à la question 1", question1, candidature1));
+        reponses.add(new Reponse("Réponse à la question 2", question2, candidature1));
+        candidature1.setReponses(reponses);
+
+        when(candidatureService.getCandidatureByToken(anyString())).thenReturn(candidature1);
+
+        mockMvc.perform(get("/profilsearch/candidature/token/123456789"))
+                .andExpect(status().isOk());
+    }
 }
