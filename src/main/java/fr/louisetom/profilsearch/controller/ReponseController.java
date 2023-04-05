@@ -3,7 +3,11 @@ package fr.louisetom.profilsearch.controller;
 import fr.louisetom.profilsearch.model.Reponse;
 import fr.louisetom.profilsearch.service.ReponseService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/profilsearch/reponse")
@@ -19,12 +23,14 @@ public class ReponseController {
     }
 
     @GetMapping("/getAll")
-    public void getAllReponse() {
-        reponseService.getAllReponse();
+    public List<Reponse> getAllReponse() {
+        return reponseService.getAllReponse();
     }
 
     @GetMapping("/{id}")
-    public void getReponseById(@PathVariable Long id) {
-        reponseService.getReponseById(id);
+    public ResponseEntity<Reponse> getReponseById(@PathVariable Long id) {
+        Optional<Reponse> reponse = reponseService.getReponseById(id);
+        return reponse.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -25,9 +26,11 @@ public class ReponseServiceImpl implements ReponseService {
     }
 
     @Override
-    public Reponse getReponseById(Long id) {
-        return reponseRepository.findById(id).orElse(null);
+    public Optional<Reponse> getReponseById(Long id) {
+        System.out.println("Reponse not found");
+        return reponseRepository.findById(id);
     }
+
 
     @Override
     public void delete(Reponse reponse) {
