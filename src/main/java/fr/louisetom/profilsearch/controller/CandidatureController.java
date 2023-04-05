@@ -19,6 +19,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class CandidatureController {
     private MailService mailService;
 
     @PostMapping("/create")
-    public void createCandidature(@RequestBody Candidature candidature) throws MessagingException, UnsupportedEncodingException {
+    public void createCandidature(@RequestBody Candidature candidature) throws MessagingException, IOException {
         List<Reponse> reponses = candidature.getReponses();
         candidature.setReponses(null);
 

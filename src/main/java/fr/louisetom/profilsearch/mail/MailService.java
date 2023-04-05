@@ -26,26 +26,34 @@ public class MailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    public void sendMail(Candidature candidature) throws MessagingException, UnsupportedEncodingException {
+    public void sendMail(Candidature candidature) throws MessagingException, IOException {
 
         MimeMessage message = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+        MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED, "UTF-8");
 
         String MAIL_USERNAME="profilsearch.help@gmail.com";
         String MAIL_PASSWORD="qmtgzqtyldlgzmah";
 
         helper.setFrom(new InternetAddress(MAIL_USERNAME, "ProfilSearch"));
         helper.setTo(candidature.getEmail());
-        helper.setSubject("Supprimer vos données de candidature de ProfilSearch");
+        helper.setSubject("Votre candidature a bien été enregistrée sur ProfilSearch");
+
+        String contentId = "logoImage";
+        ByteArrayResource imageResource = new ByteArrayResource(Files.readAllBytes(Paths.get("src/main/resources/static/logo.png")));
+
 
         String htmlMsg = "<h1>Supprimer vos données de candidature de ProfilSearch</h1>"
                 + "<p>Vous avez répondu à une candidature sur ProfilSearch, vous pouvez supprimer vos données en cliquant sur le lien suivant : </p>"
                 + "<a href='https://profilsearch.oups.net/delete/" + candidature.getToken() + "'>Supprimer mes données</a>"
                 + "<p>Si vous n'avez pas répondu à cette candidature, vous pouvez ignorer cet email.</p>"
                 + "<p>Cordialement,</p>"
-                + "<p>L'équipe ProfilSearch</p>";
+                + "<p>L'équipe ProfilSearch</p>"
+                +"<img src='cid:" + contentId + "' style='width: 400px;'/>";
 
         helper.setText(htmlMsg, true);
+
+        helper.addInline(contentId, imageResource, "image/png");
+
 
         this.javaMailSender.send(message);
 
