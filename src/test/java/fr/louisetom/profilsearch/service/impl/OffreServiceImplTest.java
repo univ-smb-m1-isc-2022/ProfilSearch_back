@@ -71,4 +71,18 @@ public class OffreServiceImplTest {
         verify(offreRepo, times(1)).findById(anyLong());
     }
 
+    @Test
+    public void testGetOffreByIdNotFound() {
+        // Configuration du mock du repository pour retourner une offre vide
+        when(offreRepo.findById(anyLong())).thenReturn(Optional.empty());
+
+        // Appel de la méthode getOffreById du service
+        Optional<Offre> result = offreService.getOffreById(1L);
+
+        // Vérification que la méthode a renvoyé une offre vide
+        assertThat(result.isPresent()).isFalse();
+
+        // Vérification que la méthode findById du repository a bien été appelée une seule fois
+        verify(offreRepo, times(1)).findById(anyLong());
+    }
 }
