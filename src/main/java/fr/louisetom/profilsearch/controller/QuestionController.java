@@ -6,11 +6,13 @@ import fr.louisetom.profilsearch.repository.QuestionRepository;
 import fr.louisetom.profilsearch.service.OffreService;
 import fr.louisetom.profilsearch.service.QuestionService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/profilsearch/question")
@@ -30,9 +32,9 @@ public class QuestionController {
     }
 
     @GetMapping("/{id}")
-    public Question getQuestionById(@PathVariable Long id) {
-        return questionService.getQuestionById(id);
+    public ResponseEntity<Question> getQuestionById(@PathVariable Long id) {
+        Optional<Question> reponse = questionService.getQuestionById(id);
+        return reponse.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
-
-
 }

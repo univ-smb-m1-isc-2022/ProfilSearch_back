@@ -2,9 +2,10 @@ package fr.louisetom.profilsearch.service;
 
 import fr.louisetom.profilsearch.model.Question;
 import java.util.List;
+import java.util.Optional;
 
 public interface QuestionService {
     Question createQuestion(Question question);
     List<Question> getAllQuestion();
-    Question getQuestionById(Long id);
+    Optional<Question> getQuestionById(Long id);
 }

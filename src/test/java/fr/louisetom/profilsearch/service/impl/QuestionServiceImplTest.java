@@ -69,21 +69,22 @@ public class QuestionServiceImplTest {
         when(questionRepository.findById(anyLong())).thenReturn(Optional.of(question));
 
         // Appel de la méthode à tester
-        Question result = questionService.getQuestionById(1L);
+        Optional<Question> result = questionService.getQuestionById(1L);
 
         // Vérification du résultat
-        assertThat(result).isSameAs(question);
+        assertThat(result.isPresent()).isTrue();
+        assertThat(result.get()).isSameAs(question);
     }
 
-    /*@Test
+    @Test
     public void testGetQuestionByIdNotFound() {
         // Configuration du mock du repository pour retourner une Optional vide
         when(questionRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         // Appel de la méthode à tester
-        Question result = questionService.getQuestionById(1L);
+        Optional<Question> result = questionService.getQuestionById(1L);
 
         // Vérification du résultat
         assertThat(result.isPresent()).isFalse();
-    }*/
+    }
 }

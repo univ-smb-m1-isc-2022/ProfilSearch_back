@@ -33,6 +33,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
+import java.util.Optional;
 
 public class QuestionControllerTest {
 
@@ -93,7 +94,7 @@ public class QuestionControllerTest {
         Question question = new Question("J'adore le Japon !");
 
         // Mock de la methode getQuestionById avec l'id 1 et la question créée précédemment
-        when(questionService.getQuestionById(anyLong())).thenReturn(question);
+        when(questionService.getQuestionById(anyLong())).thenReturn(Optional.of(question));
 
         // Test de la methode getQuestionById avec l'id 1 et vérification des réponses attendues : 200 et la question
         mockMvc.perform(get("/profilsearch/question/1"))
@@ -102,5 +103,13 @@ public class QuestionControllerTest {
 
         // Verification que la methode getQuestionById a bien été appelée une fois
         verify(questionService, times(1)).getQuestionById(anyLong());
+    }
+
+    @Test
+    public void shouldReturnNotFoudn() throws Exception {
+        when(questionService.getQuestionById(anyLong())).thenReturn(Optional.empty());
+
+        mockMvc.perform(get("/profilsearch/question/3"))
+                .andExpect(status().isNotFound());
     }
 }

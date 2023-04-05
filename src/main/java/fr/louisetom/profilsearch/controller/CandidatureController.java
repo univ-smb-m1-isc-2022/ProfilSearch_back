@@ -22,6 +22,7 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/profilsearch/candidature")
@@ -45,9 +46,14 @@ public class CandidatureController {
         Candidature savedCandidature = candidatureService.createCandidature(candidature);
 
         for (Reponse reponse : reponses) {
-            Question question = questionService.getQuestionById(reponse.getQuestion().getId());
-            reponse.setQuestion(question);
-            reponseService.createReponse(reponse);
+            Optional<Question> questionOptional = questionService.getQuestionById(reponse.getQuestion().getId());
+            if (questionOptional.isPresent()) {
+                reponse.setQuestion(questionOptional.get());
+                reponseService.createReponse(reponse);
+            } else {
+                reponse.setQuestion(null);
+                reponseService.createReponse(reponse);
+            }
         }
         savedCandidature.setReponses(reponses);
 
