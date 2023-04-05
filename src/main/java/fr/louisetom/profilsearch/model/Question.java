@@ -15,7 +15,6 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
-    @Lob
     public String question;
 
     public Question(String question) {
