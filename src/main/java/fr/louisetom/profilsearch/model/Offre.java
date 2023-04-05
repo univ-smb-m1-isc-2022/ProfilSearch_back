@@ -22,11 +22,13 @@ public class Offre {
     private Long id;
     private String name;
     private Date creation_date;
+    @Lob
     private String description;
     private String type;
     private String place;
     private int salary;
 
+    @Lob
     private byte[] image;
 
     @Column(columnDefinition = "boolean default false")
