@@ -38,8 +38,8 @@ public class MailService {
         helper.setTo(candidature.getEmail());
         helper.setSubject("Votre candidature a bien été enregistrée sur ProfilSearch");
 
-        String contentId = "logoImage";
-        ByteArrayResource imageResource = new ByteArrayResource(Files.readAllBytes(Paths.get("src/main/resources/static/logo.png")));
+        //String contentId = "logoImage";
+        //ByteArrayResource imageResource = new ByteArrayResource(Files.readAllBytes(Paths.get("src/main/resources/static/logo.png")));
 
 
         String htmlMsg = "<h1>Supprimer vos données de candidature de ProfilSearch</h1>"
@@ -47,14 +47,11 @@ public class MailService {
                 + "<a href='https://profilsearch.oups.net/delete/" + candidature.getToken() + "'>Supprimer mes données</a>"
                 + "<p>Si vous n'avez pas répondu à cette candidature, vous pouvez ignorer cet email.</p>"
                 + "<p>Cordialement,</p>"
-                + "<p>L'équipe ProfilSearch</p>"
-                +"<img src='cid:" + contentId + "' style='width: 400px;'/>";
-
+                + "<p>L'équipe ProfilSearch</p>";
         helper.setText(htmlMsg, true);
 
-        helper.addInline(contentId, imageResource, "image/png");
-
-
+        //helper.addInline(contentId, imageResource, "image/png");
+        
         this.javaMailSender.send(message);
 
     }
@@ -70,8 +67,8 @@ public class MailService {
         helper.setTo(invitation.getEmail());
         helper.setSubject("Invitation à devenir administrateur de ProfilSearch");
 
-        String contentId = "logoImage";
-        ByteArrayResource imageResource = new ByteArrayResource(Files.readAllBytes(Paths.get("src/main/resources/static/logo.png")));
+        //String contentId = "logoImage";
+        //ByteArrayResource imageResource = new ByteArrayResource(Files.readAllBytes(Paths.get("src/main/resources/static/logo.png")));
 
 
         String htmlMsg = "<h1>Devenez administrateur de ProfilSearch</h1>" +
@@ -79,15 +76,9 @@ public class MailService {
                 + "<a href='https://profilsearch.oups.net/signup'> S'inscrire </a>"
                 + "<p>Si vous ne connaissez pas ProfilSearch, vous pouvez ignorer cet email.</p>"
                 + "<p>Cordialement,</p>"
-                + "<p>L'équipe ProfilSearch</p>"
-                +"<img src='cid:" + contentId + "' style='width: 400px;'/>";
+                + "<p>L'équipe ProfilSearch</p>";
 
         helper.setText(htmlMsg, true);
-
-
-        System.out.println(imageResource.getFilename());
-        helper.addInline(contentId, imageResource, "image/png");
-
 
         javaMailSender.send(message);
     }
