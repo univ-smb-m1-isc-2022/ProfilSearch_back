@@ -2,6 +2,7 @@ package fr.louisetom.profilsearch.security.oauth2;
 
 import fr.louisetom.profilsearch.exception.OAuth2AuthenticationProcessingException;
 import fr.louisetom.profilsearch.model.AuthProvider;
+import fr.louisetom.profilsearch.model.Invitation;
 import fr.louisetom.profilsearch.model.User;
 import fr.louisetom.profilsearch.repository.InvitationRepository;
 import fr.louisetom.profilsearch.repository.UserRepository;
@@ -80,7 +81,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             //user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo, null);
             //user = null;
 
-            if (invitationRepository.findByEmail(oAuth2UserInfo.getEmail()) != null) {
+            System.out.println("invitationRepository.findByEmail(oAuth2UserInfo.getEmail()) = " + invitationRepository.findByEmail(oAuth2UserInfo.getEmail()));
+            // service donc appel du repository
+
+            Optional<Invitation> invitation = invitationRepository.findByEmail(oAuth2UserInfo.getEmail());
+            
+            if (invitation.isPresent()) {
                 user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo, null);
             } else {
                 throw new OAuth2AuthenticationProcessingException("User not admited");
